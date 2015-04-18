@@ -187,7 +187,7 @@ public class BST403<T extends Comparable<T>> {
 				
 				public iterator(){
 					x = root;
-					stack = null;
+					stack = new Stack<Node>();
 					while (x.left != null){
 						stack.push(x);
 						x = x.left;
@@ -195,7 +195,7 @@ public class BST403<T extends Comparable<T>> {
 				}
 		
 				public boolean hasNext() {
-					if (x.left != null || x.right != null){
+					if (x != null){
 						return true;
 					}
 					else return false;
@@ -203,7 +203,7 @@ public class BST403<T extends Comparable<T>> {
 				
 	
 				public Node<T> next() {
-					Node temp;
+					Node<T> temp;
 					Node leftmost = x.right;
 					if (leftmost != null){
 						while (leftmost.left != null){
@@ -265,10 +265,11 @@ public class BST403<T extends Comparable<T>> {
 		System.out.println(tree);
 		
 
-		while(tree.iterator().hasNext()) {
-			System.out.println(tree.iterator().next());
-		}
+		Iterator<Node> i = tree.iterator();
+		  while(i.hasNext()) {
+		   System.out.println(i.next());
+		  }
 
-		System.out.println(tree.iterator().next());
+		
 	}
 }
