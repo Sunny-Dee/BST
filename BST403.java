@@ -147,28 +147,51 @@ public class BST403<T extends Comparable<T>> {
 	// this method is called when x.val is the value to be removed from the tree
 	// it returns the Node that replaces x
 	public Node<T> remove(Node<T> x) {
-		Node<T> minLeft;
+		
 		if (x.right == null && x.left == null) return null;
-		else if(x.left == null) return x.right;
 		else if(x.right == null) return x.left;
+		else if(x.left == null) return x.right;
 		else {
+
 			
-			minLeft = x.right;
-			while (minLeft.left != null){
-				minLeft = minLeft.left;
-				
-			}
-			x.val = minLeft.val;
-			minLeft = minLeft.right;
+			
+//			Node<T> minLeft;
+//			minLeft = x.right;
+//			while (minLeft.left != null){
+//				minLeft = minLeft.left;
+//				
+//			}
+//			x.val = minLeft.val;
 //			if (minLeft.right != null){ 
 //					minLeft = minLeft.right;
 //			}
 //			else {
-//				//minLeft.val = null;
 //				minLeft = null;
 //			}
-
-			return x;
+//
+//			return x;
+			
+			//assign x to temp to keep track of the node to update
+			Node temp = x; 			
+			
+			//find the leftmost on the right subtree
+			x = x.right;
+			while ( x.left != null){
+				x = x.left;
+			}
+			
+			//assign that leftmost value to temp
+			temp.val = x.val;
+			
+			//update the value of the leftmost node
+			if ( x.right != null){
+				x = x.right; 
+			}
+			else x = null;
+			
+			//
+			//x = temp;
+			return temp;
 		}
 	}
 	
