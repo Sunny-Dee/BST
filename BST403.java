@@ -147,11 +147,12 @@ public class BST403<T extends Comparable<T>> {
 	// this method is called when x.val is the value to be removed from the tree
 	// it returns the Node that replaces x
 	public Node<T> remove(Node<T> x) {
+		Node<T> minLeft;
 		if (x.right == null && x.left == null) return null;
 		else if(x.left == null) return x.right;
 		else if(x.right == null) return x.left;
 		else {
-			Node<T> minLeft;
+			
 			minLeft = x.right;
 			while (minLeft.left != null){
 				minLeft = minLeft.left;
@@ -170,15 +171,6 @@ public class BST403<T extends Comparable<T>> {
 			return x;
 		}
 	}
-
-
-//	public static Comparator<City> countryNameComparator() {
-//		 class countryNameComparator implements Comparator<City>{
-//			public int compare(City city1, City city2) {
-//				return city1.country.compareTo(city2.country);
-//				}
-//		}
-	
 	
 	public Iterator<T> iterator(){
 		class iterator implements Iterator<T> {
@@ -188,10 +180,10 @@ public class BST403<T extends Comparable<T>> {
 				public iterator(){
 					x = root;
 					stack = new Stack<Node>();
-					while (x.left != null){
-						stack.push(x);
-						x = x.left;
-					}
+//					while (x.left != null){
+//						stack.push(x);
+//						x = x.left;
+//					}
 				}
 		
 				public boolean hasNext() {
@@ -202,31 +194,23 @@ public class BST403<T extends Comparable<T>> {
 	
 				public T next() {
 					Node<T> temp;
-					Node leftmost = x.right;
-					if (leftmost != null){
-						while (leftmost.left != null){
-							stack.push(leftmost);
-							leftmost = leftmost.left; //leftmost child in right subtree
+					while (x != null){
+							stack.push(x);
+							x = x.left; 
 						}
-						temp = x;
-						x = leftmost;		
-						return temp.val; 
+					
+					x = stack.pop();
+					temp = x;
+					x = x.right;
+					return temp.val;
+
 					}
-					else {
-						temp = x;
-						x = stack.pop();
-						return temp.val;
-					}
-				}
+	
 			}
 		
 		return new iterator();
 	}
 	
-//	public Iterator<Node> iterator(){
-//		return new NodeIterator();
-//	}
-
 	
 	private static int random(int max) {
 		return (int) Math.floor(max*Math.random()+.99999999);
@@ -234,34 +218,34 @@ public class BST403<T extends Comparable<T>> {
 
 	// you can use this to test your remove method
 	public static void main(String[] args) {
-//		BST403<Integer> tree = new BST403<Integer>();
-//		for (int i=0; i<20; i++) {
-//			int x = random(20);
-//			System.out.println("Add " + x + " " + tree.add(x));
-//		}
-//		System.out.println(tree);
-//		Scanner console = new Scanner(System.in);
-//		for (int i=0; i<10; i++) {
-//			int x = random(20);
-//			System.out.println("Remove " + x + " " + tree.remove(x));
-//			System.out.println(tree);
-//		}
 		BST403<Integer> tree = new BST403<Integer>();
-		tree.add(10);
-		tree.add(5);
-		tree.add(12);
-		tree.add(18);
-		tree.add(25);
-		tree.add(20);
-		tree.add(21);
-
+		for (int i=0; i<20; i++) {
+			int x = random(20);
+			System.out.println("Add " + x + " " + tree.add(x));
+		}
 		System.out.println(tree);
 		Scanner console = new Scanner(System.in);
-		
-
-		System.out.println("Remove 12 " + tree.remove(12));
-		System.out.println(tree);
-		
+		for (int i=0; i<10; i++) {
+			int x = random(20);
+			System.out.println("Remove " + x + " " + tree.remove(x));
+			System.out.println(tree);
+		}
+//		BST403<Integer> tree = new BST403<Integer>();
+//		tree.add(10);
+//		tree.add(5);
+//		tree.add(12);
+//		tree.add(18);
+//		tree.add(25);
+//		tree.add(20);
+//		tree.add(21);
+//
+//		System.out.println(tree);
+//		Scanner console = new Scanner(System.in);
+//		
+//
+//		System.out.println("Remove 12 " + tree.remove(12));
+//		System.out.println(tree);
+//		
 
 		Iterator<Integer> i = tree.iterator();
 		  while(i.hasNext()) {
